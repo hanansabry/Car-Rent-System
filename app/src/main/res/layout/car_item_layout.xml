@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_gray_2"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/car_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Car Category" />
+
+        <TextView
+            android:id="@+id/car_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tritary_gray"
+            app:layout_constraintStart_toStartOf="@id/car_category"
+            app:layout_constraintTop_toBottomOf="@id/car_category"
+            tools:text="Car Model" />
+
+        <TextView
+            android:id="@+id/model_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tritary_gray"
+            app:layout_constraintStart_toEndOf="@id/car_model"
+            app:layout_constraintTop_toBottomOf="@id/car_category"
+            tools:text=" - Year: 2015" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/car_color"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="top|center"
+            android:background="@color/green"
+            app:shapeAppearance="@style/circleImageView"
+            app:layout_constraintStart_toStartOf="@id/car_color_lbl"
+            app:layout_constraintEnd_toEndOf="@id/car_color_lbl"
+            app:layout_constraintTop_toTopOf="@id/car_category"
+            app:layout_constraintBottom_toBottomOf="@id/car_category"/>
+
+        <TextView
+            android:id="@+id/car_color_lbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/color"
+            android:textColor="@color/tritary_gray"
+            app:layout_constraintBottom_toBottomOf="@id/model_year"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/model_year" />
+
+        <ImageView
+            android:id="@+id/car_image"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/car_image_1"
+            app:layout_constraintTop_toBottomOf="@id/car_model" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_overlay"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:padding="4dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/separator"
+            tools:text="Car Descriptions: Unique car , it's fabric bla bla bla sakldjs dlkjsdlkf jsdlkfjs ldkjfsldfj slkdjf lsdjfl skdjfsldkfj slkdfj slkdjf slkdfj lskdfj slkdfj sldkfj sldfj sdlkf j lskdajf lskdjf lskjdflks flskdj flsdkjf lsdkfj  asdkjhf ksdjfh kjsdhf sdfjks dhkjfshd fksjdfh skjak sjdhfk sdfkj sdkjf" />
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/tritary_gray"
+            app:layout_constraintTop_toBottomOf="@id/car_image"/>
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/agency_lbl"
+            app:layout_constraintEnd_toStartOf="@id/price_lbl"
+            app:layout_constraintTop_toTopOf="@id/agency_lbl"
+            tools:text="$50" />
+
+        <TextView
+            android:id="@+id/price_lbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/Day"
+            android:textColor="@color/dark_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/price"
+            app:layout_constraintBottom_toBottomOf="@id/price"/>
+
+        <TextView
+            android:id="@+id/agency_lbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Agency:"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator" />
+
+        <TextView
+            android:id="@+id/agency_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/dark_gray"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/agency_lbl"
+            app:layout_constraintTop_toTopOf="@id/agency_lbl"
+            app:layout_constraintBottom_toBottomOf="@id/agency_lbl"
+            tools:text="RAYA AUTO CARS"/>
+
+        <Button
+            android:id="@+id/rent_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/cornered_primary_bg"
+            android:text="Rent Now"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/agency_lbl" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Car Rent System</string>
+    <string name="get_started">Get Started</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="register_now">Register Now</string>
+    <string name="login_as_agency">Login As Agency</string>
+    <string name="register_as_agency">Register As Agency</string>
+    <string name="agency_dashboard">Agency Dashboard</string>
+    <string name="add_new_car">Add New Car</string>
+    <string name="car_list">Car List</string>
+    <string name="manage_orders">Manage Orders</string>
+    <string name="plat_no">Plat No.</string>
+    <string name="desc">Description</string>
+    <string name="price">Price / Day</string>
+    <string name="uplaod_car_images">Uplaod Car Images</string>
+    <string name="submit">Submit</string>
+    <string name="search_cars">Search cars</string>
+    <string name="to_date">To Date</string>
+    <string name="from_date">From Date</string>
+    <string name="search_for_a_car">Search for a car</string>
+    <string name="search_results">Search Results</string>
+    <string name="color">Color</string>
+</resources>
