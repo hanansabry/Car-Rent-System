@@ -23,4 +23,18 @@
     <string name="search_for_a_car">Search for a car</string>
     <string name="search_results">Search Results</string>
     <string name="color">Color</string>
+    <string name="rent_order">Rent Order</string>
+    <string name="full_name">Full Name</string>
+    <string name="civil_id">Civil ID</string>
+    <string name="upload_driving_license">Upload driving license</string>
+    <string name="email_password_required_2">Email and password are required</string>
+    <string name="email_address_format_err_msg">The email address is badly formatted</string>
+    <string name="already_in_use_err_msg">The email address is already in use by another account</string>
+    <string name="sign_up_general_error_msg">Can\'t create account, please try again later</string>
+    <string name="user_not_found_err_msg">There is no user corresponding to this email address</string>
+    <string name="sign_in_general_error_msg">Wrong ُemail or password. Please try again</string>
+    <string name="password_invalid_err_msg">The given password is invalid [ Password should be at least 6 characters ]</string>
+    <string name="email_password_required_message">E mail and password must be inserted</string>
+    <string name="all_fields_required_message">All fields must be inserted</string>
+
 </resources>

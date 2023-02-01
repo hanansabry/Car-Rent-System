@@ -56,22 +56,6 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/user_name_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/cornered_white_bg"
-            android:gravity="start|center"
-            android:hint="Username"
-            android:inputType="textPersonName"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textAlignment="viewStart"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/dark_gray"
-            android:textSize="16sp" />
-
-        <EditText
             android:id="@+id/email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="54dp"

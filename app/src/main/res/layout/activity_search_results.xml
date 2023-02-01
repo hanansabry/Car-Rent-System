@@ -32,6 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cars_available_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="16dp"

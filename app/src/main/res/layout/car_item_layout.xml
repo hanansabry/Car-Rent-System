@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
@@ -22,7 +21,7 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Car Category" />
+            android:text="Car Category" />
 
         <TextView
             android:id="@+id/car_model"
@@ -31,7 +30,7 @@
             android:textColor="@color/tritary_gray"
             app:layout_constraintStart_toStartOf="@id/car_category"
             app:layout_constraintTop_toBottomOf="@id/car_category"
-            tools:text="Car Model" />
+            android:text="Car Model" />
 
         <TextView
             android:id="@+id/model_year"
@@ -40,7 +39,7 @@
             android:textColor="@color/tritary_gray"
             app:layout_constraintStart_toEndOf="@id/car_model"
             app:layout_constraintTop_toBottomOf="@id/car_category"
-            tools:text=" - Year: 2015" />
+            android:text=" - Year: 2015" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/car_color"
@@ -81,9 +80,10 @@
             android:ellipsize="end"
             android:maxLines="4"
             android:padding="4dp"
+            android:text="Car Descriptions: Unique car , it's fabric bla bla bla sakldjs dlkjsdlkf jsdlkfjs ldkjfsldfj slkdjf lsdjfl skdjfsldkfj slkdfj slkdjf slkdfj lskdfj slkdfj sldkfj sldfj sdlkf j lskdajf lskdjf lskjdflks flskdj flsdkjf lsdkfj  asdkjhf ksdjfh kjsdhf sdfjks dhkjfshd fksjdfh skjak sjdhfk sdfkj sdkjf"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@id/separator"
-            tools:text="Car Descriptions: Unique car , it's fabric bla bla bla sakldjs dlkjsdlkf jsdlkfjs ldkjfsldfj slkdjf lsdjfl skdjfsldkfj slkdfj slkdjf slkdfj lskdfj slkdfj sldkfj sldfj sdlkf j lskdajf lskdjf lskjdflks flskdj flsdkjf lsdkfj  asdkjhf ksdjfh kjsdhf sdfjks dhkjfshd fksjdfh skjak sjdhfk sdfkj sdkjf" />
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/separator" />
 
         <View
             android:id="@+id/separator"
@@ -98,12 +98,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:textColor="@color/colorAccent"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/agency_lbl"
             app:layout_constraintEnd_toStartOf="@id/price_lbl"
             app:layout_constraintTop_toTopOf="@id/agency_lbl"
-            tools:text="$50" />
+            android:text="$50" />
 
         <TextView
             android:id="@+id/price_lbl"
@@ -122,7 +122,7 @@
             android:layout_marginTop="16dp"
             android:text="Agency:"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/separator" />
@@ -133,11 +133,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:textColor="@color/dark_gray"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/agency_lbl"
             app:layout_constraintTop_toTopOf="@id/agency_lbl"
             app:layout_constraintBottom_toBottomOf="@id/agency_lbl"
-            tools:text="RAYA AUTO CARS"/>
+            android:text="RAYA AUTO CARS"/>
 
         <Button
             android:id="@+id/rent_button"
@@ -149,6 +149,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/agency_lbl" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

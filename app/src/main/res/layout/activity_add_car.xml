@@ -33,10 +33,8 @@
             android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="@id/back_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/back_button"
-            app:layout_constraintVertical_bias="0.727" />
+            app:layout_constraintTop_toTopOf="@id/back_button"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,6 +68,7 @@
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dropdown"
                     android:layout_toEndOf="@id/icon_1"
+                    android:entries="@array/select_category"
                     tools:listheader="Select Category"/>
 
 
@@ -99,6 +98,7 @@
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dropdown"
                     android:layout_toEndOf="@id/icon_2"
+                    android:entries="@array/select_type"
                     tools:listheader="Select Category"/>
 
 
@@ -128,6 +128,7 @@
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dropdown"
                     android:layout_toEndOf="@id/icon_3"
+                    android:entries="@array/select_model"
                     tools:listheader="Select Category"/>
 
             </RelativeLayout>
@@ -156,6 +157,7 @@
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dropdown"
                     android:layout_toEndOf="@id/icon_4"
+                    android:entries="@array/select_year"
                     tools:listheader="Select Category"/>
 
             </RelativeLayout>
@@ -184,8 +186,8 @@
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dropdown"
                     android:layout_toEndOf="@id/icon_5"
+                    android:entries="@array/colors"
                     tools:listheader="Select Category"/>
-
 
             </RelativeLayout>
 
@@ -313,7 +315,8 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:hint="@string/uplaod_car_images"
-                    android:inputType="textMultiLine"/>
+                    android:inputType="textMultiLine"
+                    android:enabled="false"/>
 
                 <ImageView
                     android:id="@+id/upload_images_button"

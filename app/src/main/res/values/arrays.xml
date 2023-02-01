@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="select_category">
+        <item>Category</item>
+    </string-array>
+
+    <string-array name="select_type">
+        <item>Type</item>
+    </string-array>
+
+    <string-array name="select_model">
+        <item>Model</item>
+    </string-array>
+
+    <string-array name="select_year">
+        <item>Year</item>
+    </string-array>
+
+    <string-array name="colors">
+        <item>Color</item>
+        <item>White</item>
+        <item>Black</item>
+        <item>Silver</item>
+        <item>Gray</item>>
+        <item>Red</item>>
+        <item>Blue</item>>
+        <item>Green</item>>
+        <item>Yellow</item>>
+        <item>Brown</item>>
+        <item>Orange</item>
+    </string-array>
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "592108359741",
+    "project_id": "rent-car-system-bdde4",
+    "storage_bucket": "rent-car-system-bdde4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592108359741:android:7257d49c6bd341c0ae5a54",
+        "android_client_info": {
+          "package_name": "com.android.carrentsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592108359741-qum6d58m526la6vodmmn43rf07k84k0l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzMC6xAw-D6z3jc6ltbIe_IyU_4ckSNVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592108359741-qum6d58m526la6vodmmn43rf07k84k0l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
