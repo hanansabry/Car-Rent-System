@@ -19,10 +19,15 @@ import com.android.carrentsystem.di.ViewModelProviderFactory;
 import com.android.carrentsystem.presentation.viewmodels.SearchCarsViewModel;
 import com.android.carrentsystem.utils.Constants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -55,6 +60,8 @@ public class SearchCarsActivity extends DaggerAppCompatActivity {
     private CarType selectedType;
     private CarModel selectedModel;
     private String selectedYear;
+    private long fromDay;
+    private long toDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,26 +173,36 @@ public class SearchCarsActivity extends DaggerAppCompatActivity {
         });
     }
 
-    private void showDatePicker(EditText fromOrToDate) {
+    private void showDatePicker(DatePickerDialog.OnDateSetListener dateSetListener) {
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                (view, year, monthOfYear, dayOfMonth) ->
-                        fromOrToDate.setText(String.format(Locale.getDefault(), "%d-%d-%d", dayOfMonth, monthOfYear + 1, year)), mYear, mMonth, mDay);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateSetListener, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
 
-    @OnClick(R.id.from_date_edit_text)
+    @OnClick(R.id.from_date_layout)
     public void onFromDatePicked() {
-        showDatePicker(fromDateEditText);
+        showDatePicker((view, year, monthOfYear, dayOfMonth) -> {
+            fromDateEditText.setText(String.format(Locale.getDefault(),
+                    "%d-%d-%d", dayOfMonth, monthOfYear + 1, year));
+            Calendar selectedDate = Calendar.getInstance();
+            selectedDate.set(year, monthOfYear, dayOfMonth);
+            fromDay = selectedDate.getTimeInMillis();
+        });
     }
 
-    @OnClick(R.id.to_date_edit_text)
+    @OnClick(R.id.to_date_layout)
     public void onToDatePicked() {
-        showDatePicker(toDateEditText);
+        showDatePicker((view, year, monthOfYear, dayOfMonth) -> {
+            toDateEditText.setText(String.format(Locale.getDefault(),
+                    "%d-%d-%d", dayOfMonth, monthOfYear + 1, year));
+            Calendar selectedDate = Calendar.getInstance();
+            selectedDate.set(year, monthOfYear, dayOfMonth);
+            toDay = selectedDate.getTimeInMillis();
+        });
     }
 
     @OnClick(R.id.search_cars_button)
@@ -203,8 +220,10 @@ public class SearchCarsActivity extends DaggerAppCompatActivity {
             intent.putExtra(Constants.MODEL, selectedModel.getName());
             intent.putExtra(Constants.TYPE, selectedType.getName());
             intent.putExtra(Constants.YEAR, selectedYear);
-            intent.putExtra(Constants.FROM, fromDateEditText.getText().toString());
-            intent.putExtra(Constants.TO, toDateEditText.getText().toString());
+            intent.putExtra(Constants.FROM, fromDay);
+            intent.putExtra(Constants.TO, toDay);
+            long daysNum = TimeUnit.DAYS.convert((toDay - fromDay), TimeUnit.MILLISECONDS);
+            intent.putExtra(Constants.NUM_DAYS, daysNum);
             startActivity(intent);
         }
     }

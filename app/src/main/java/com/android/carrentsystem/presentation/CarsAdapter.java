@@ -1,5 +1,7 @@
 package com.android.carrentsystem.presentation;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,6 +84,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.CarViewHolder>
             description.setText(car.getDescription());
             agencyName.setText(car.getAgencyName());
             price.setText(String.valueOf(car.getPrice()));
+            carColor.setBackgroundColor(Color.parseColor(car.getColor()));
             Glide.with(itemView.getContext())
                     .load(car.getCarImagesUrls().get(0))
                     .into(carImage);

@@ -204,7 +204,7 @@
                         android:hint="@string/from_date"
                         android:textSize="14sp"
                         android:inputType="date"
-                        android:editable="false"/>
+                        android:enabled="false"/>
 
                 </RelativeLayout>
 
@@ -238,7 +238,7 @@
                         android:inputType="date"
                         android:spinnerMode="dropdown"
                         android:textSize="14sp"
-                        android:editable="false"/>
+                        android:enabled="false"/>
 
                 </RelativeLayout>
 

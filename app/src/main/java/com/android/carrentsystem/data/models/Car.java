@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 public class Car implements Parcelable {
 
     private String id;
+    private String agencyId;
     private String agencyName;
     private String category;
     private String type;
@@ -27,6 +28,7 @@ public class Car implements Parcelable {
 
     protected Car(Parcel in) {
         id = in.readString();
+        agencyId = in.readString();
         agencyName = in.readString();
         category = in.readString();
         type = in.readString();
@@ -58,6 +60,14 @@ public class Car implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAgencyId() {
+        return agencyId;
+    }
+
+    public void setAgencyId(String agencyId) {
+        this.agencyId = agencyId;
     }
 
     public String getAgencyName() {
@@ -156,6 +166,7 @@ public class Car implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(id);
+        dest.writeString(agencyId);
         dest.writeString(agencyName);
         dest.writeString(category);
         dest.writeString(type);

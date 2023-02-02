@@ -5,6 +5,8 @@ import android.net.Uri;
 import com.android.carrentsystem.data.models.Agency;
 import com.android.carrentsystem.data.models.Car;
 import com.android.carrentsystem.data.models.CarCategory;
+import com.android.carrentsystem.data.models.Color;
+import com.android.carrentsystem.data.models.RentOrder;
 import com.android.carrentsystem.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -167,13 +169,36 @@ public class FirebaseDataSource {
         });
     }
 
+    public Flowable<List<Color>> retrieveColors() {
+        return Flowable.create(emitter -> {
+            DatabaseReference carsRef = firebaseDatabase.getReference(Constants.CARS).child(Constants.COLORS);
+            carsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<Color> colorList = new ArrayList<>();
+                    for (DataSnapshot colorSnapShot : snapshot.getChildren()) {
+                        Color color = new Color();
+                        color.setColorName(colorSnapShot.getKey());
+                        color.setColorCode(colorSnapShot.getValue(String.class));
+                        colorList.add(color);
+                    }
+                    emitter.onNext(colorList);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    emitter.onError(error.toException());
+                }
+            });
+        }, BackpressureStrategy.BUFFER);
+    }
 
     public Flowable<List<Car>> retrieveSearchCarResults(String category,
                                                         String type,
                                                         String model,
                                                         String year,
-                                                        String from,
-                                                        String to) {
+                                                        long from,
+                                                        long to) {
         return Flowable.create(emitter -> {
             DatabaseReference carsRef = firebaseDatabase.getReference(Constants.AVAILABLE_CARS);
             carsRef.addValueEventListener(new ValueEventListener() {
@@ -199,5 +224,21 @@ public class FirebaseDataSource {
                 }
             });
         }, BackpressureStrategy.BUFFER);
+    }
+
+    public Single<Boolean> addNewOrder(RentOrder order) {
+        return Single.create(emitter -> {
+            //add car firstly to available cars node
+            firebaseDatabase.getReference(Constants.ORDERS)
+                    .push()
+                    .setValue(order)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                           emitter.onSuccess(true);
+                        } else {
+                            emitter.onSuccess(false);
+                        }
+                    });
+        });
     }
 }

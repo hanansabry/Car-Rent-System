@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.android.carrentsystem.data.DatabaseRepository;
 import com.android.carrentsystem.data.models.Car;
 import com.android.carrentsystem.data.models.CarCategory;
+import com.android.carrentsystem.data.models.Color;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class AddCarViewModel extends ViewModel {
     private final CompositeDisposable disposable = new CompositeDisposable();
     private final MediatorLiveData<String> uploadImageState = new MediatorLiveData<>();
     private final MediatorLiveData<List<CarCategory>> retrieveCarCategoriesLiveData = new MediatorLiveData<>();
+    private final MediatorLiveData<List<Color>> colorListLiveData = new MediatorLiveData<>();
     private final MediatorLiveData<Boolean> addCarStateLiveData = new MediatorLiveData<>();
     private final MediatorLiveData<String> errorState = new MediatorLiveData<>();
 
@@ -61,8 +63,36 @@ public class AddCarViewModel extends ViewModel {
                 });
     }
 
-    public void uploadImageToFirebaseStorage(Uri imageUri, String agencyName, String platNum) {
-        String folderName = "cars" + "/" + agencyName + "/" + platNum;
+    public void retrieveColors() {
+        databaseRepository.retrieveColors()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .toObservable()
+                .subscribe(new Observer<List<Color>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(List<Color> colorList) {
+                        colorListLiveData.setValue(colorList);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        errorState.setValue(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        retrieveCarCategoriesLiveData.setValue(null);
+                    }
+                });
+    }
+
+    public void uploadImageToFirebaseStorage(Uri imageUri, String agencyId, String platNum) {
+        String folderName = "cars" + "/" + agencyId + "/" + platNum;
         SingleObserver<String> singleObserver = databaseRepository.uploadImageToFirebaseStorage(imageUri, folderName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -112,6 +142,10 @@ public class AddCarViewModel extends ViewModel {
 
     public MediatorLiveData<List<CarCategory>> observeRetrieveCarCategoriesLiveData() {
         return retrieveCarCategoriesLiveData;
+    }
+
+    public MediatorLiveData<List<Color>> observeColorListLiveData() {
+        return colorListLiveData;
     }
 
     public MediatorLiveData<Boolean> observeAddCarStateLiveData() {

@@ -16,4 +16,7 @@ public class Constants {
     public static final String TO = "to";
     public static final String AGENCY_NAME = "agency_name";
     public static final String CAR = "car";
+    public static final String COLORS = "colors";
+    public static final String ORDERS = "orders";
+    public static final String NUM_DAYS = "num_days";
 }

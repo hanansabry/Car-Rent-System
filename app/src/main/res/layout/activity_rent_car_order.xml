@@ -167,10 +167,11 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:hint="@string/upload_driving_license"
-                    android:inputType="textMultiLine"/>
+                    android:inputType="textMultiLine"
+                    android:enabled="false"/>
 
                 <ImageView
-                    android:id="@+id/upload_images_button"
+                    android:id="@+id/upload_license_button"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_alignParentEnd="true"

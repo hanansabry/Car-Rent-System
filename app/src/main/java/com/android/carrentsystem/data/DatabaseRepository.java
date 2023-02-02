@@ -5,6 +5,8 @@ import android.net.Uri;
 import com.android.carrentsystem.data.models.Agency;
 import com.android.carrentsystem.data.models.Car;
 import com.android.carrentsystem.data.models.CarCategory;
+import com.android.carrentsystem.data.models.Color;
+import com.android.carrentsystem.data.models.RentOrder;
 import com.android.carrentsystem.datasource.FirebaseDataSource;
 
 import java.util.List;
@@ -48,8 +50,16 @@ public class DatabaseRepository {
                                                         String type,
                                                         String model,
                                                         String year,
-                                                        String from,
-                                                        String to) {
+                                                        long from,
+                                                        long to) {
         return firebaseDataSource.retrieveSearchCarResults(category, type, model, year, from, to);
+    }
+
+    public Flowable<List<Color>> retrieveColors() {
+        return firebaseDataSource.retrieveColors();
+    }
+
+    public Single<Boolean> addNewRentOrder(RentOrder order) {
+        return firebaseDataSource.addNewOrder(order);
     }
 }

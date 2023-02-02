@@ -42,8 +42,9 @@ public class SearchResultsActivity extends DaggerAppCompatActivity {
         String model = intent.getStringExtra(Constants.MODEL);
         String type = intent.getStringExtra(Constants.TYPE);
         String year = intent.getStringExtra(Constants.YEAR);
-        String from = intent.getStringExtra(Constants.FROM);
-        String to = intent.getStringExtra(Constants.TO);
+        long from = intent.getLongExtra(Constants.FROM, 0);
+        long to = intent.getLongExtra(Constants.TO, 0);
+        long dayNum = intent.getLongExtra(Constants.NUM_DAYS, 1);
 
         searchCarViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SearchCarsViewModel.class);
         searchCarViewModel.retrieveSearchCarResults(category, type, model, year, from, to);
@@ -52,6 +53,9 @@ public class SearchResultsActivity extends DaggerAppCompatActivity {
                 CarsAdapter carsAdapter = new CarsAdapter(carList, car -> {
                     Intent intent1 = new Intent(SearchResultsActivity.this, RentCarOrderActivity.class);
                     intent1.putExtra(Constants.CAR, car);
+                    intent1.putExtra(Constants.FROM, from);
+                    intent1.putExtra( Constants.TO, to);
+                    intent1.putExtra(Constants.NUM_DAYS, dayNum);
                     startActivity(intent1);
                 });
                 carsRecyclerView.setAdapter(carsAdapter);

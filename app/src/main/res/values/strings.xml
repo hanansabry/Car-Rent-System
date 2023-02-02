@@ -36,5 +36,17 @@
     <string name="password_invalid_err_msg">The given password is invalid [ Password should be at least 6 characters ]</string>
     <string name="email_password_required_message">E mail and password must be inserted</string>
     <string name="all_fields_required_message">All fields must be inserted</string>
+    <string name="agency_rules">1- Age Restrictions: Renters must be at least 21 years old and have a valid driver\'s license.\n
+        2- Insurance: Renters must have liability insurance coverage or purchase the agency\'s insurance coverage.\n
+        3- Driving Restrictions: Renters must obey all traffic laws and are not allowed to use the vehicle for illegal activities.\n
+        4- Maintenance and Cleaning: Renters must return the vehicle in the same condition as it was received, including refueling the tank, and cleaning the interior and exterior.\n
+        5- Damage and Loss: Renters are responsible for any damage or loss to the vehicle during the rental period.\n
+        6- Fuel Policy: Renters must return the vehicle with the same fuel level as it was received, or a refueling fee will be charged.\n
+        7- Late Returns: Renters must return the vehicle on the agreed upon return date and time, or a late fee will be charged.\n
+        8- Mileage Limits: Renters may be subject to a per-mile charge if the mileage exceeds the agreed upon limit.\n
+        9- Reservation Policy: Renters must provide a valid credit card to secure a reservation and may be required to pay a deposit or prepayment.</string>
+    <string name="agree">I Agree</string>
+    <string name="dont_agree">Don\'t Agree</string>
+    <string name="agency_rules_must_be_agreed">You must agree to Agency Rules</string>
 
 </resources>

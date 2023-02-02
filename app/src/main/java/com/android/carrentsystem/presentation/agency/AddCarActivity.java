@@ -17,6 +17,7 @@ import com.android.carrentsystem.data.models.Car;
 import com.android.carrentsystem.data.models.CarCategory;
 import com.android.carrentsystem.data.models.CarModel;
 import com.android.carrentsystem.data.models.CarType;
+import com.android.carrentsystem.data.models.Color;
 import com.android.carrentsystem.datasource.SharedPreferencesDataSource;
 import com.android.carrentsystem.di.ViewModelProviderFactory;
 import com.android.carrentsystem.presentation.images.GalleryImagesSelector;
@@ -68,6 +69,7 @@ public class AddCarActivity extends DaggerAppCompatActivity {
     private CarType selectedType;
     private CarModel selectedModel;
     private String selectedYear;
+    private Color selectedColor;
     private List<Uri> carImagesUris = new ArrayList<>();
     private List<String> uploadedCarImagesUris = new ArrayList<>();
     private GalleryImagesSelector imagesSelector;
@@ -84,6 +86,7 @@ public class AddCarActivity extends DaggerAppCompatActivity {
         addCarViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(AddCarViewModel.class);
         addCarViewModel.retrieveCarCategories();
         initiateSpinners();
+        setColorsSpinner();
     }
 
     private void initiateSpinners() {
@@ -185,6 +188,33 @@ public class AddCarActivity extends DaggerAppCompatActivity {
         });
     }
 
+    private void setColorsSpinner() {
+        addCarViewModel.retrieveColors();
+        addCarViewModel.observeColorListLiveData().observe(this, colors -> {
+            List<String> colorNames = new ArrayList<>();
+            colorNames.add("Color");
+            for (Color color : colors) {
+                colorNames.add(color.getColorName());
+            }
+            ArrayAdapter<String> colorsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+            colorsAdapter.addAll(colorNames);
+            colorsSpinner.setAdapter(colorsAdapter);
+            colorsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (position > 0) {
+                        selectedColor = colors.get(position - 1);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        });
+    }
+
     @OnClick(R.id.submit_button)
     public void onSubmitClicked() {
         Car newCar = validateCarProperties();
@@ -218,7 +248,6 @@ public class AddCarActivity extends DaggerAppCompatActivity {
     }
 
     private Car validateCarProperties() {
-        String selectedColor = colorsSpinner.getSelectedItemPosition() == 0 ? null : colorsSpinner.getSelectedItem().toString();
         if (selectedCategory == null
                 || selectedType == null
                 || selectedModel == null
@@ -231,12 +260,13 @@ public class AddCarActivity extends DaggerAppCompatActivity {
             return null;
         } else {
             Car car = new Car();
+            car.setAgencyId(sharedPreferencesDataSource.getAgencyId());
             car.setAgencyName(sharedPreferencesDataSource.getAgencyName());
             car.setCategory(selectedCategory.getName());
             car.setType(selectedType.getName());
             car.setModel(selectedModel.getName());
             car.setYear(selectedYear);
-            car.setColor(selectedColor);
+            car.setColor(selectedColor.getColorCode());
             car.setPlatNum(platNumEditText.getText().toString());
             car.setDescription(descEditText.getText().toString());
             car.setPrice(Double.parseDouble(priceEditText.getText().toString()));
