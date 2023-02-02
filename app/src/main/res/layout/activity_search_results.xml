@@ -37,6 +37,7 @@
         android:layout_height="0dp"
         android:padding="16dp"
         android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/car_item_layout"/>

@@ -149,7 +149,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@id/agency_lbl" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

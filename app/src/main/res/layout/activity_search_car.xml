@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/black_background"
-    tools:context=".presentation.client.SearchCarActivity">
+    tools:context=".presentation.client.SearchCarsActivity">
 
     <ImageButton
         android:id="@+id/back_button"
@@ -76,6 +76,7 @@
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dropdown"
                     android:layout_toEndOf="@id/icon_1"
+                    android:entries="@array/select_category"
                     tools:listheader="Select Category"/>
 
 
@@ -105,6 +106,7 @@
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dropdown"
                     android:layout_toEndOf="@id/icon_2"
+                    android:entries="@array/select_type"
                     tools:listheader="Select Category"/>
 
 
@@ -134,6 +136,7 @@
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dropdown"
                     android:layout_toEndOf="@id/icon_3"
+                    android:entries="@array/select_model"
                     tools:listheader="Select Category"/>
 
             </RelativeLayout>
@@ -162,6 +165,7 @@
                     android:layout_marginEnd="16dp"
                     android:spinnerMode="dropdown"
                     android:layout_toEndOf="@id/icon_4"
+                    android:entries="@array/select_year"
                     tools:listheader="Select Category"/>
 
             </RelativeLayout>
@@ -172,6 +176,7 @@
                 android:layout_marginTop="16dp"
                 android:weightSum="2">
                 <RelativeLayout
+                    android:id="@+id/from_date_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -198,11 +203,13 @@
                         android:background="@null"
                         android:hint="@string/from_date"
                         android:textSize="14sp"
-                        android:inputType="date"/>
+                        android:inputType="date"
+                        android:editable="false"/>
 
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/to_date_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -230,7 +237,8 @@
                         android:hint="@string/to_date"
                         android:inputType="date"
                         android:spinnerMode="dropdown"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:editable="false"/>
 
                 </RelativeLayout>
 

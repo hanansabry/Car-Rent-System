@@ -168,4 +168,36 @@ public class FirebaseDataSource {
     }
 
 
+    public Flowable<List<Car>> retrieveSearchCarResults(String category,
+                                                        String type,
+                                                        String model,
+                                                        String year,
+                                                        String from,
+                                                        String to) {
+        return Flowable.create(emitter -> {
+            DatabaseReference carsRef = firebaseDatabase.getReference(Constants.AVAILABLE_CARS);
+            carsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<Car> carList = new ArrayList<>();
+                    for (DataSnapshot carSnapshot : snapshot.getChildren()) {
+                        Car car = carSnapshot.getValue(Car.class);
+                        if (car.getCategory().equals(category)
+                                && car.getType().equals(type)
+                                && car.getModel().equals(model)
+                                && car.getYear().equals(year)
+                        ) {
+                            carList.add(car);
+                        }
+                    }
+                    emitter.onNext(carList);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    emitter.onError(error.toException());
+                }
+            });
+        }, BackpressureStrategy.BUFFER);
+    }
 }

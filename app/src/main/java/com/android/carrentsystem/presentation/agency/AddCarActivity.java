@@ -231,7 +231,7 @@ public class AddCarActivity extends DaggerAppCompatActivity {
             return null;
         } else {
             Car car = new Car();
-            car.setAgencyId(sharedPreferencesDataSource.getAgencyId());
+            car.setAgencyName(sharedPreferencesDataSource.getAgencyName());
             car.setCategory(selectedCategory.getName());
             car.setType(selectedType.getName());
             car.setModel(selectedModel.getName());

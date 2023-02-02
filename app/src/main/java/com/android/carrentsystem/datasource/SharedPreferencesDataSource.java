@@ -27,4 +27,12 @@ public class SharedPreferencesDataSource {
     }
 
 
+    public void setAgencyName(String name) {
+        editor.putString(Constants.AGENCY_NAME, name);
+        editor.apply();
+    }
+
+    public String getAgencyName() {
+        return sharedPreferences.getString(Constants.AGENCY_NAME, null);
+    }
 }

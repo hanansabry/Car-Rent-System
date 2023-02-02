@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.carrentsystem.R;
-import com.android.carrentsystem.presentation.client.SearchCarActivity;
+import com.android.carrentsystem.presentation.client.SearchCarsActivity;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -21,7 +21,7 @@ public class StartActivity extends AppCompatActivity {
 
     @OnClick(R.id.get_started_button)
     public void onGetStartedClicked() {
-        startActivity(new Intent(this, SearchCarActivity.class));
+        startActivity(new Intent(this, SearchCarsActivity.class));
     }
 
     @OnClick(R.id.agency_button)

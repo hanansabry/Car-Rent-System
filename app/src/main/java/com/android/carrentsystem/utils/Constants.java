@@ -8,4 +8,12 @@ public class Constants {
     public static final String CATEGORIES = "categories";
     public static final String IMAGE_FILE_TYPE = ".jpg";
     public static final String AVAILABLE_CARS = "available_cars";
+    public static final String CATEGORY = "category";
+    public static final String MODEL = "model";
+    public static final String TYPE = "type";
+    public static final String YEAR = "year";
+    public static final String FROM = "from";
+    public static final String TO = "to";
+    public static final String AGENCY_NAME = "agency_name";
+    public static final String CAR = "car";
 }

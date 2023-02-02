@@ -49,6 +49,7 @@ public class LoginActivity extends DaggerAppCompatActivity {
                 signIn.setVisibility(View.VISIBLE);
                 loginProgressBar.setVisibility(View.GONE);
                 sharedPreferencesDataSource.setAgencyId(agency.getId());
+                sharedPreferencesDataSource.setAgencyName(agency.getName());
                 startActivity(new Intent(this, AgencyDashboardActivity.class));
                 finish();
             }

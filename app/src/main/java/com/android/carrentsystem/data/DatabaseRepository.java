@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
@@ -43,4 +44,12 @@ public class DatabaseRepository {
         return firebaseDataSource.addNewCar(agencyId, car);
     }
 
+    public Flowable<List<Car>> retrieveSearchCarResults(String category,
+                                                        String type,
+                                                        String model,
+                                                        String year,
+                                                        String from,
+                                                        String to) {
+        return firebaseDataSource.retrieveSearchCarResults(category, type, model, year, from, to);
+    }
 }

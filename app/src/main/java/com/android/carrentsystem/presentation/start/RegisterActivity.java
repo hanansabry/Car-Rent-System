@@ -62,6 +62,7 @@ public class RegisterActivity extends DaggerAppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 signUpButton.setVisibility(View.VISIBLE);
                 sharedPreferencesDataSource.setAgencyId(agency.getId());
+                sharedPreferencesDataSource.setAgencyName(agency.getName());
                 Intent intent = new Intent(RegisterActivity.this, AgencyDashboardActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

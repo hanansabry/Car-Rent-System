@@ -1,11 +1,16 @@
 package com.android.carrentsystem.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Car {
+import androidx.annotation.NonNull;
+
+public class Car implements Parcelable {
 
     private String id;
-    private String agencyId;
+    private String agencyName;
     private String category;
     private String type;
     private String model;
@@ -17,6 +22,36 @@ public class Car {
     private List<String> carImagesUrls;
     private String status;
 
+    public Car() {
+    }
+
+    protected Car(Parcel in) {
+        id = in.readString();
+        agencyName = in.readString();
+        category = in.readString();
+        type = in.readString();
+        model = in.readString();
+        year = in.readString();
+        color = in.readString();
+        platNum = in.readString();
+        description = in.readString();
+        price = in.readDouble();
+        carImagesUrls = in.createStringArrayList();
+        status = in.readString();
+    }
+
+    public static final Creator<Car> CREATOR = new Creator<Car>() {
+        @Override
+        public Car createFromParcel(Parcel in) {
+            return new Car(in);
+        }
+
+        @Override
+        public Car[] newArray(int size) {
+            return new Car[size];
+        }
+    };
+
     public String getId() {
         return id;
     }
@@ -25,12 +60,12 @@ public class Car {
         this.id = id;
     }
 
-    public String getAgencyId() {
-        return agencyId;
+    public String getAgencyName() {
+        return agencyName;
     }
 
-    public void setAgencyId(String agencyId) {
-        this.agencyId = agencyId;
+    public void setAgencyName(String agencyName) {
+        this.agencyName = agencyName;
     }
 
     public String getCategory() {
@@ -111,6 +146,27 @@ public class Car {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(agencyName);
+        dest.writeString(category);
+        dest.writeString(type);
+        dest.writeString(model);
+        dest.writeString(year);
+        dest.writeString(color);
+        dest.writeString(platNum);
+        dest.writeString(description);
+        dest.writeDouble(price);
+        dest.writeStringList(carImagesUrls);
+        dest.writeString(status);
     }
 
     public enum CarStatus {

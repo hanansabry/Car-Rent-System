@@ -22,7 +22,7 @@
             android:name=".presentation.client.SearchResultsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.client.SearchCarActivity"
+            android:name=".presentation.client.SearchCarsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.agency.ManageOrdersActivity"
