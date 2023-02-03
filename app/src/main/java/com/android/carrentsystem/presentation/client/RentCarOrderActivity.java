@@ -89,6 +89,7 @@ public class RentCarOrderActivity extends DaggerAppCompatActivity {
     private long from;
     private long to;
     private double totalPrice;
+    private long dayNum;
 
 
     @Override
@@ -103,14 +104,14 @@ public class RentCarOrderActivity extends DaggerAppCompatActivity {
         selectedCar = getIntent().getParcelableExtra(Constants.CAR);
         from = getIntent().getLongExtra(Constants.FROM, 0);
         to = getIntent().getLongExtra(Constants.TO, 0);
-        long dayNum = getIntent().getLongExtra(Constants.NUM_DAYS, 0);
+        dayNum = getIntent().getLongExtra(Constants.NUM_DAYS, 0);
 
-        setCarDetails(dayNum);
+        setCarDetails();
         imagesSelector = new GalleryImagesSelector(this);
         rentCarViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(RentCarViewModel.class);
     }
 
-    private void setCarDetails(long dayNum) {
+    private void setCarDetails() {
         rentButton.setVisibility(View.GONE);
         priceLbl.setText("/Total Price");
         totalPrice = dayNum * selectedCar.getPrice();
@@ -120,7 +121,6 @@ public class RentCarOrderActivity extends DaggerAppCompatActivity {
         year.setText(selectedCar.getYear());
         description.setText(selectedCar.getDescription());
         agencyName.setText(selectedCar.getAgencyName());
-        totalPriceView.setText(String.valueOf(selectedCar.getPrice()));
         carColor.setBackgroundColor(Color.parseColor(selectedCar.getColor()));
         Glide.with(this)
                 .load(selectedCar.getCarImagesUrls().get(0))
@@ -192,6 +192,7 @@ public class RentCarOrderActivity extends DaggerAppCompatActivity {
             order.setSelectedCar(selectedCar);
             order.setFrom(from);
             order.setTo(to);
+            order.setNumDays(dayNum);
             order.setTotalPrice(totalPrice);
             return order;
         }

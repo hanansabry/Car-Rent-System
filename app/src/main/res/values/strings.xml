@@ -48,5 +48,12 @@
     <string name="agree">I Agree</string>
     <string name="dont_agree">Don\'t Agree</string>
     <string name="agency_rules_must_be_agreed">You must agree to Agency Rules</string>
+    <string name="details">Details</string>
+    <string name="order_details">Order Details</string>
+    <string name="phone">Phone</string>
+    <string name="car_details">Car details:</string>
+    <string name="driving_license">Driving license:</string>
+    <string name="confirm">Confirm</string>
+    <string name="reject">Reject</string>
 
 </resources>

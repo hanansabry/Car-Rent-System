@@ -62,4 +62,12 @@ public class DatabaseRepository {
     public Single<Boolean> addNewRentOrder(RentOrder order) {
         return firebaseDataSource.addNewOrder(order);
     }
+
+    public Flowable<List<RentOrder>> retrieveAgencyOrders(String agencyId) {
+        return firebaseDataSource.retrieveAgencyOrders(agencyId);
+    }
+
+    public Single<Boolean> addStatusToRentOrder(String orderId, String agencyNotes, boolean isConfirmed) {
+        return firebaseDataSource.addStatusToRentOrder(orderId, agencyNotes, isConfirmed);
+    }
 }

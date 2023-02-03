@@ -19,4 +19,5 @@ public class Constants {
     public static final String COLORS = "colors";
     public static final String ORDERS = "orders";
     public static final String NUM_DAYS = "num_days";
+    public static final String ORDER = "order";
 }

@@ -13,12 +13,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -234,7 +236,52 @@ public class FirebaseDataSource {
                     .setValue(order)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                           emitter.onSuccess(true);
+                            emitter.onSuccess(true);
+                        } else {
+                            emitter.onSuccess(false);
+                        }
+                    });
+        });
+    }
+
+    public Flowable<List<RentOrder>> retrieveAgencyOrders(String agencyId) {
+        return Flowable.create(emitter -> {
+            Query ordersRef = firebaseDatabase.getReference(Constants.ORDERS).orderByChild("agencyId").equalTo(agencyId);
+            ordersRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<RentOrder> orderList = new ArrayList<>();
+                    for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
+                        RentOrder order = orderSnapshot.getValue(RentOrder.class);
+                        order.setId(orderSnapshot.getKey());
+                        orderList.add(order);
+                    }
+                    emitter.onNext(orderList);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    emitter.onError(error.toException());
+                }
+            });
+        }, BackpressureStrategy.BUFFER);
+    }
+
+    public Single<Boolean> addStatusToRentOrder(String orderId, String agencyNotes, boolean isConfirmed) {
+        return Single.create(emitter -> {
+            //add car firstly to available cars node
+            DatabaseReference orderRef = firebaseDatabase.getReference(Constants.ORDERS).child(orderId);
+            HashMap<String, Object> updates = new HashMap<>();
+            if (isConfirmed) {
+                updates.put("status", RentOrder.RentOrderStatus.Processing);
+            } else {
+                updates.put("status", RentOrder.RentOrderStatus.REJECTED);
+            }
+            updates.put("agencyNotes", agencyNotes);
+            orderRef.updateChildren(updates)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            emitter.onSuccess(true);
                         } else {
                             emitter.onSuccess(false);
                         }

@@ -10,8 +10,9 @@ import com.android.carrentsystem.presentation.start.StartActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends DaggerAppCompatActivity {
 
     private static final long SPLASH_TIME_OUT = 500;
 

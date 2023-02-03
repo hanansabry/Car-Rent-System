@@ -19,12 +19,8 @@ import com.android.carrentsystem.di.ViewModelProviderFactory;
 import com.android.carrentsystem.presentation.viewmodels.SearchCarsViewModel;
 import com.android.carrentsystem.utils.Constants;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -71,6 +67,8 @@ public class SearchCarsActivity extends DaggerAppCompatActivity {
 
         searchCarViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SearchCarsViewModel.class);
         searchCarViewModel.retrieveCarCategories();
+        searchCarViewModel.observeErrorState().observe(this,
+                error -> Toast.makeText(this, error, Toast.LENGTH_SHORT).show());
         initiateSpinners();
     }
 

@@ -3,10 +3,13 @@ package com.android.carrentsystem.di;
 
 import com.android.carrentsystem.di.modules.AddCarViewModelModule;
 import com.android.carrentsystem.di.modules.AuthenticationViewModelModule;
+import com.android.carrentsystem.di.modules.ManagerOrdersViewModelModule;
 import com.android.carrentsystem.di.modules.RentCarViewModelModule;
 import com.android.carrentsystem.di.modules.SearchCarViewModelModule;
 import com.android.carrentsystem.presentation.SplashActivity;
 import com.android.carrentsystem.presentation.agency.AddCarActivity;
+import com.android.carrentsystem.presentation.agency.ManageOrdersActivity;
+import com.android.carrentsystem.presentation.agency.OrderDetailsActivity;
 import com.android.carrentsystem.presentation.client.RentCarOrderActivity;
 import com.android.carrentsystem.presentation.client.SearchCarsActivity;
 import com.android.carrentsystem.presentation.client.SearchResultsActivity;
@@ -39,4 +42,10 @@ public abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(modules = RentCarViewModelModule.class)
     abstract RentCarOrderActivity contributeRentCarOrderActivity();
+
+    @ContributesAndroidInjector(modules = ManagerOrdersViewModelModule.class)
+    abstract ManageOrdersActivity contributeManageOrdersActivity();
+
+    @ContributesAndroidInjector(modules = ManagerOrdersViewModelModule.class)
+    abstract OrderDetailsActivity contributeOrderDetailsActivity();
 }

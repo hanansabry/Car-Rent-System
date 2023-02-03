@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.carrentsystem">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:name=".presentation.BaseActivity"
         android:allowBackup="true"
@@ -15,6 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity android:name=".presentation.agency.OrderDetailsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".presentation.client.RentCarOrderActivity"
             android:screenOrientation="portrait" />
@@ -64,7 +65,8 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

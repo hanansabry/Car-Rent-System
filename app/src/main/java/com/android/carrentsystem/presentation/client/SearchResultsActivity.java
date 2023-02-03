@@ -1,6 +1,5 @@
 package com.android.carrentsystem.presentation.client;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -12,10 +11,9 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.android.carrentsystem.R;
-import com.android.carrentsystem.data.models.Car;
 import com.android.carrentsystem.datasource.SharedPreferencesDataSource;
 import com.android.carrentsystem.di.ViewModelProviderFactory;
-import com.android.carrentsystem.presentation.CarsAdapter;
+import com.android.carrentsystem.presentation.adapters.CarsAdapter;
 import com.android.carrentsystem.presentation.viewmodels.SearchCarsViewModel;
 import com.android.carrentsystem.utils.Constants;
 
