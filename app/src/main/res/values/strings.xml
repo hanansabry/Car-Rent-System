@@ -58,5 +58,7 @@
     <string name="search_orders_by_phone_number">Search orders by phone number</string>
     <string name="i_agree">I Agree</string>
     <string name="sign_out">Sign Out</string>
+    <string name="plate_number">Plate Number</string>
+    <string name="check_violations">Check Violations</string>
 
 </resources>

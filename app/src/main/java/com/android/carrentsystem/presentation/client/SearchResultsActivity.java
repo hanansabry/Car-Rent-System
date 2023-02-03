@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.android.carrentsystem.R;
 import com.android.carrentsystem.datasource.SharedPreferencesDataSource;
 import com.android.carrentsystem.di.ViewModelProviderFactory;
-import com.android.carrentsystem.presentation.adapters.CarsAdapter;
+import com.android.carrentsystem.presentation.adapters.AvailableCarsAdapter;
 import com.android.carrentsystem.presentation.viewmodels.SearchCarsViewModel;
 import com.android.carrentsystem.utils.Constants;
 
@@ -48,7 +48,7 @@ public class SearchResultsActivity extends DaggerAppCompatActivity {
         searchCarViewModel.retrieveSearchCarResults(category, type, model, year, from, to);
         searchCarViewModel.observeCarSearchResultLiveData().observe(this, carList -> {
             if (carList != null && !carList.isEmpty()) {
-                CarsAdapter carsAdapter = new CarsAdapter(carList, car -> {
+                AvailableCarsAdapter carsAdapter = new AvailableCarsAdapter(carList, car -> {
                     Intent intent1 = new Intent(SearchResultsActivity.this, RentCarOrderActivity.class);
                     intent1.putExtra(Constants.CAR, car);
                     intent1.putExtra(Constants.FROM, from);

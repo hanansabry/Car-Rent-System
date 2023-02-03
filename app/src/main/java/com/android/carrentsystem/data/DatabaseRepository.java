@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
@@ -76,5 +77,9 @@ public class DatabaseRepository {
 
     public Single<Boolean> confirmRentOrder(RentOrder rentOrder) {
         return firebaseDataSource.confirmRentOrder(rentOrder);
+    }
+
+    public Flowable<List<Car>> retrieveAgencyCars(String agencyId) {
+        return firebaseDataSource.retrieveAgencyCars(agencyId);
     }
 }

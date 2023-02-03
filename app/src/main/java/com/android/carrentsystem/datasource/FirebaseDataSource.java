@@ -371,4 +371,27 @@ public class FirebaseDataSource {
             });
         }, BackpressureStrategy.BUFFER);
     }
+
+    public Flowable<List<Car>> retrieveAgencyCars(String agencyId) {
+        return Flowable.create(emitter -> {
+            Query ordersRef = firebaseDatabase.getReference(Constants.AVAILABLE_CARS).orderByChild("agencyId").equalTo(agencyId);
+            ordersRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<Car> carList = new ArrayList<>();
+                    for (DataSnapshot carSnapshot : snapshot.getChildren()) {
+                        Car car = carSnapshot.getValue(Car.class);
+                        car.setId(carSnapshot.getKey());
+                        carList.add(car);
+                    }
+                    emitter.onNext(carList);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    emitter.onError(error.toException());
+                }
+            });
+        }, BackpressureStrategy.BUFFER);
+    }
 }

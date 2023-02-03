@@ -20,12 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.CarViewHolder> {
+public class AvailableCarsAdapter extends RecyclerView.Adapter<AvailableCarsAdapter.CarViewHolder> {
 
     private List<Car> carList;
     private SelectCarCallback selectCarCallback;
 
-    public CarsAdapter(List<Car> carList, SelectCarCallback selectCarCallback) {
+    public AvailableCarsAdapter(List<Car> carList, SelectCarCallback selectCarCallback) {
         this.carList = carList;
         this.selectCarCallback = selectCarCallback;
     }
