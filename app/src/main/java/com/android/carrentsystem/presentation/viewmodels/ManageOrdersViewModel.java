@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Observer;
+import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -42,8 +43,8 @@ public class ManageOrdersViewModel extends ViewModel {
                     }
 
                     @Override
-                    public void onNext(List<RentOrder> categoryList) {
-                        orderListLiveDate.setValue(categoryList);
+                    public void onNext(List<RentOrder> orderList) {
+                        orderListLiveDate.setValue(orderList);
                     }
 
                     @Override
@@ -80,7 +81,29 @@ public class ManageOrdersViewModel extends ViewModel {
                 });
     }
 
-    public MediatorLiveData<List<RentOrder>> observeOrderListLiveDate() {
+    public void confirmRentOrder(String orderId, String carId) {
+        SingleObserver<Boolean> singleObserver = databaseRepository.confirmRentOrder(orderId, carId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new SingleObserver<Boolean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(Boolean success) {
+                        orderStatusLiveData.setValue(success);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        errorState.setValue(e.getMessage());
+                    }
+                });
+    }
+
+        public MediatorLiveData<List<RentOrder>> observeOrderListLiveDate() {
         return orderListLiveDate;
     }
 

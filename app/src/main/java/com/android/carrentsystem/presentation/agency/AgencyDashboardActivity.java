@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.carrentsystem.R;
+import com.android.carrentsystem.presentation.start.StartActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AgencyDashboardActivity extends AppCompatActivity {
 
@@ -31,6 +33,15 @@ public class AgencyDashboardActivity extends AppCompatActivity {
     @OnClick(R.id.manage_orders_view)
     public void onManageOrdersClicked() {
         startActivity(new Intent(this, ManageOrdersActivity.class));
+    }
+
+    @OnClick(R.id.sign_out)
+    public void onSignOutClicked() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(this, StartActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.back_button)

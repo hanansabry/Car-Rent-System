@@ -55,5 +55,8 @@
     <string name="driving_license">Driving license:</string>
     <string name="confirm">Confirm</string>
     <string name="reject">Reject</string>
+    <string name="search_orders_by_phone_number">Search orders by phone number</string>
+    <string name="i_agree">I Agree</string>
+    <string name="sign_out">Sign Out</string>
 
 </resources>

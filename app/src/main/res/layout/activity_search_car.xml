@@ -255,6 +255,38 @@
                 android:textSize="18sp"
                 android:background="@drawable/cornered_primary_bg"/>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_background"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/search_orders_by_phone_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="16dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/search_orders_by_phone_number"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:inputType="phone" />
+
+                <ImageView
+                    android:id="@+id/search_orders_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@android:drawable/ic_search_category_default" />
+            </RelativeLayout>
+
         </LinearLayout>
 
     </ScrollView>

@@ -20,4 +20,6 @@ public class Constants {
     public static final String ORDERS = "orders";
     public static final String NUM_DAYS = "num_days";
     public static final String ORDER = "order";
+    public static final String IS_CLIENT = "is_client";
+    public static final String NO_AVAILABLE_ORDERS = "no_orders_found";
 }

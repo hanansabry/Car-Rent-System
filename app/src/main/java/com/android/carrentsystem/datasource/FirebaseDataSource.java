@@ -209,6 +209,7 @@ public class FirebaseDataSource {
                     List<Car> carList = new ArrayList<>();
                     for (DataSnapshot carSnapshot : snapshot.getChildren()) {
                         Car car = carSnapshot.getValue(Car.class);
+                        car.setId(carSnapshot.getKey());
                         if (car.getCategory().equals(category)
                                 && car.getType().equals(type)
                                 && car.getModel().equals(model)
@@ -273,9 +274,9 @@ public class FirebaseDataSource {
             DatabaseReference orderRef = firebaseDatabase.getReference(Constants.ORDERS).child(orderId);
             HashMap<String, Object> updates = new HashMap<>();
             if (isConfirmed) {
-                updates.put("status", RentOrder.RentOrderStatus.Processing);
+                updates.put("status", RentOrder.RentOrderStatus.PROCESSING.value);
             } else {
-                updates.put("status", RentOrder.RentOrderStatus.REJECTED);
+                updates.put("status", RentOrder.RentOrderStatus.REJECTED.value);
             }
             updates.put("agencyNotes", agencyNotes);
             orderRef.updateChildren(updates)
@@ -287,5 +288,57 @@ public class FirebaseDataSource {
                         }
                     });
         });
+    }
+
+    public Single<Boolean> confirmRentOrder(String orderId, String carId) {
+        return Single.create(emitter -> {
+            //change order status
+            DatabaseReference orderRef = firebaseDatabase.getReference(Constants.ORDERS).child(orderId);
+            HashMap<String, Object> updates = new HashMap<>();
+            updates.put("status", RentOrder.RentOrderStatus.CONFIRMED.value);
+            orderRef.updateChildren(updates)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            //change car status in cars node
+                            DatabaseReference carRef = firebaseDatabase.getReference(Constants.AVAILABLE_CARS)
+                                    .child(carId);
+                            HashMap<String, Object> carUpdates = new HashMap<>();
+                            carUpdates.put("status", Car.CarStatus.RENTED.value);
+                            carRef.updateChildren(carUpdates).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    emitter.onSuccess(true);
+                                }
+                            });
+                        } else {
+                            emitter.onSuccess(false);
+                        }
+                    });
+        });
+    }
+
+    public Flowable<RentOrder> retrieveOrdersByPhone(String phone) {
+        return Flowable.create(emitter -> {
+            Query ordersRef = firebaseDatabase.getReference(Constants.ORDERS).orderByChild("phone").equalTo(phone).limitToFirst(1);
+            ordersRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.hasChildren()) {
+                        for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
+                            RentOrder order = orderSnapshot.getValue(RentOrder.class);
+                            order.setId(orderSnapshot.getKey());
+                            emitter.onNext(order);
+                            emitter.onComplete();
+                        }
+                    } else {
+                        emitter.onError(new Throwable(Constants.NO_AVAILABLE_ORDERS));
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    emitter.onError(error.toException());
+                }
+            });
+        }, BackpressureStrategy.BUFFER);
     }
 }

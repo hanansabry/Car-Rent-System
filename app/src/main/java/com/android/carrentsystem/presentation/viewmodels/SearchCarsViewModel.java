@@ -3,6 +3,7 @@ package com.android.carrentsystem.presentation.viewmodels;
 import com.android.carrentsystem.data.DatabaseRepository;
 import com.android.carrentsystem.data.models.Car;
 import com.android.carrentsystem.data.models.CarCategory;
+import com.android.carrentsystem.data.models.RentOrder;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class SearchCarsViewModel extends ViewModel {
     private final CompositeDisposable disposable = new CompositeDisposable();
     private final MediatorLiveData<List<CarCategory>> retrieveCarCategoriesLiveData = new MediatorLiveData<>();
     private final MediatorLiveData<List<Car>> carListLiveData = new MediatorLiveData<>();
+    private final MediatorLiveData<RentOrder> orderLiveDate = new MediatorLiveData<>();
     private final MediatorLiveData<String> errorState = new MediatorLiveData<>();
 
     @Inject
@@ -90,12 +92,44 @@ public class SearchCarsViewModel extends ViewModel {
                 });
     }
 
+    public void retrieveOrdersByPhone(String phone) {
+        databaseRepository.retrieveOrdersByPhone(phone)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .toObservable()
+                .subscribe(new Observer<RentOrder>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RentOrder order) {
+                        orderLiveDate.setValue(order);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        errorState.setValue(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        orderLiveDate.setValue(null);
+                    }
+                });
+    }
+
     public MediatorLiveData<List<CarCategory>> observeRetrieveCarCategoriesLiveData() {
         return retrieveCarCategoriesLiveData;
     }
 
     public MediatorLiveData<List<Car>> observeCarSearchResultLiveData() {
         return carListLiveData;
+    }
+
+    public MediatorLiveData<RentOrder> observeOrderLiveDate() {
+        return orderLiveDate;
     }
 
     public MediatorLiveData<String> observeErrorState() {

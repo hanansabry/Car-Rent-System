@@ -237,7 +237,7 @@
             android:layout_marginBottom="16dp"
             android:weightSum="2"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toTopOf="@id/agree_client_button">
 
             <Button
                 android:id="@+id/confirm_button"
@@ -265,5 +265,20 @@
                 android:textSize="18sp" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/agree_client_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_margin="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/cornered_primary_bg"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/i_agree"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

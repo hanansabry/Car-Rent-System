@@ -182,7 +182,7 @@ public class RentOrder implements Parcelable {
 
     public enum RentOrderStatus {
         NEW("new"),
-        Processing("processing"),
+        PROCESSING("processing"),
         CONFIRMED("confirmed"),
         REJECTED("rejected"),
         RETURNED("returned");

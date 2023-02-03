@@ -13,7 +13,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
@@ -67,7 +66,15 @@ public class DatabaseRepository {
         return firebaseDataSource.retrieveAgencyOrders(agencyId);
     }
 
+    public Flowable<RentOrder> retrieveOrdersByPhone(String phone) {
+        return firebaseDataSource.retrieveOrdersByPhone(phone);
+    }
+
     public Single<Boolean> addStatusToRentOrder(String orderId, String agencyNotes, boolean isConfirmed) {
         return firebaseDataSource.addStatusToRentOrder(orderId, agencyNotes, isConfirmed);
+    }
+
+    public Single<Boolean> confirmRentOrder(String orderId, String carId) {
+        return firebaseDataSource.confirmRentOrder(orderId, carId);
     }
 }

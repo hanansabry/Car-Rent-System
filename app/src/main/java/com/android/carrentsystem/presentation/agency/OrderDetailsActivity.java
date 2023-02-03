@@ -1,6 +1,5 @@
 package com.android.carrentsystem.presentation.agency;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -9,7 +8,6 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,12 +60,19 @@ public class OrderDetailsActivity extends DaggerAppCompatActivity {
     Button rentButton;
     @BindView(R.id.agency_notes_edit_text)
     EditText agencyNotesEditText;
+    @BindView(R.id.agree_client_button)
+    Button agreeClientButton;
+    @BindView(R.id.confirm_button)
+    Button confirmAgencyButton;
+    @BindView(R.id.reject_button)
+    Button rejectAgencyButton;
     @Inject
     ViewModelProviderFactory providerFactory;
     @Inject
     SharedPreferencesDataSource sharedPreferencesDataSource;
     private ManageOrdersViewModel manageOrdersViewModel;
     private RentOrder order;
+    private boolean isClient;
 
 
     @Override
@@ -77,10 +82,19 @@ public class OrderDetailsActivity extends DaggerAppCompatActivity {
         ButterKnife.bind(this);
 
         order = getIntent().getParcelableExtra(Constants.ORDER);
-        Toast.makeText(this, order.getCivilId(), Toast.LENGTH_SHORT).show();
+        isClient = getIntent().getBooleanExtra(Constants.IS_CLIENT, false);
 
         setClientDetails();
         setCarDetails();
+        if (isClient) {
+            confirmAgencyButton.setVisibility(View.GONE);
+            rejectAgencyButton.setVisibility(View.GONE);
+            agencyNotesEditText.setEnabled(false);
+            agencyNotesEditText.setText(order.getAgencyNotes());
+            if (order.getStatus().equals(RentOrder.RentOrderStatus.PROCESSING.value)) {
+                agreeClientButton.setVisibility(View.VISIBLE);
+            }
+        }
         manageOrdersViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(ManageOrdersViewModel.class);
         manageOrdersViewModel.observeOrderStatusLiveData().observe(this, success ->{
             Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
@@ -138,6 +152,14 @@ public class OrderDetailsActivity extends DaggerAppCompatActivity {
     public void onRejectClicked() {
         String agencyNotes = agencyNotesEditText.getText().toString();
         manageOrdersViewModel.addStatusToRentOrder(order.getId(), agencyNotes, false);
+    }
+
+    @OnClick(R.id.agree_client_button)
+    public void onAgreeClientClicked() {
+        //change order status to confirmed
+        //change car status to rented
+        manageOrdersViewModel.confirmRentOrder(order.getId(), order.getSelectedCar().getId());
+//        manageOrdersViewModel.addStatusToRentOrder(order.getId(), agencyNotes, false);
     }
 
 

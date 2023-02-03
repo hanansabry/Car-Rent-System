@@ -14,8 +14,10 @@ import com.android.carrentsystem.R;
 import com.android.carrentsystem.data.models.CarCategory;
 import com.android.carrentsystem.data.models.CarModel;
 import com.android.carrentsystem.data.models.CarType;
+import com.android.carrentsystem.data.models.RentOrder;
 import com.android.carrentsystem.datasource.SharedPreferencesDataSource;
 import com.android.carrentsystem.di.ViewModelProviderFactory;
+import com.android.carrentsystem.presentation.agency.OrderDetailsActivity;
 import com.android.carrentsystem.presentation.viewmodels.SearchCarsViewModel;
 import com.android.carrentsystem.utils.Constants;
 
@@ -27,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +50,8 @@ public class SearchCarsActivity extends DaggerAppCompatActivity {
     EditText fromDateEditText;
     @BindView(R.id.to_date_edit_text)
     EditText toDateEditText;
+    @BindView(R.id.search_orders_by_phone_edit_text)
+    EditText searchByPhoneEditText;
     @Inject
     ViewModelProviderFactory providerFactory;
     @Inject
@@ -67,8 +72,13 @@ public class SearchCarsActivity extends DaggerAppCompatActivity {
 
         searchCarViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SearchCarsViewModel.class);
         searchCarViewModel.retrieveCarCategories();
-        searchCarViewModel.observeErrorState().observe(this,
-                error -> Toast.makeText(this, error, Toast.LENGTH_SHORT).show());
+        searchCarViewModel.observeErrorState().observe(this, error -> {
+            if (error.equals(Constants.NO_AVAILABLE_ORDERS)) {
+                Toast.makeText(this, "No orders found", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
         initiateSpinners();
     }
 
@@ -223,6 +233,29 @@ public class SearchCarsActivity extends DaggerAppCompatActivity {
             long daysNum = TimeUnit.DAYS.convert((toDay - fromDay), TimeUnit.MILLISECONDS);
             intent.putExtra(Constants.NUM_DAYS, daysNum);
             startActivity(intent);
+        }
+    }
+
+    @OnClick(R.id.search_orders_button)
+    public void onSearchOrdersClicked() {
+        String phoneNumber = searchByPhoneEditText.getText().toString().trim();
+        if (phoneNumber.isEmpty()) {
+            Toast.makeText(this, "You must enter phone number", Toast.LENGTH_SHORT).show();
+        } else {
+            searchCarViewModel.retrieveOrdersByPhone(phoneNumber);
+            Observer<RentOrder> searchOrdersObserver = new Observer<RentOrder>() {
+                @Override
+                public void onChanged(RentOrder order) {
+                    if (order != null) {
+                        Intent intent = new Intent(SearchCarsActivity.this, OrderDetailsActivity.class);
+                        intent.putExtra(Constants.ORDER, order);
+                        intent.putExtra(Constants.IS_CLIENT, true);
+                        startActivity(intent);
+                        searchCarViewModel.observeOrderLiveDate().removeObserver(this);
+                    }
+                }
+            };
+            searchCarViewModel.observeOrderLiveDate().observe(this, searchOrdersObserver);
         }
     }
 
