@@ -6,6 +6,7 @@ import com.android.carrentsystem.data.models.Agency;
 import com.android.carrentsystem.data.models.Car;
 import com.android.carrentsystem.data.models.CarCategory;
 import com.android.carrentsystem.data.models.Color;
+import com.android.carrentsystem.data.models.RentDate;
 import com.android.carrentsystem.data.models.RentOrder;
 import com.android.carrentsystem.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
@@ -215,7 +216,29 @@ public class FirebaseDataSource {
                                 && car.getModel().equals(model)
                                 && car.getYear().equals(year)
                         ) {
-                            carList.add(car);
+                            if (car.getStatus().equals(Car.CarStatus.AVAILABLE.value)) {
+                                carList.add(car);
+                            } else if (car.getStatus().equals(Car.CarStatus.RENTED.value)) {
+                                HashMap<String, RentDate> rentDates = car.getRentDates();
+                                if (rentDates != null) {
+                                    boolean isAvailable = false;
+                                    for (String id : rentDates.keySet()) {
+                                        RentDate rentDate = rentDates.get(id);
+                                        if (from < rentDate.getFrom() && to < rentDate.getFrom() ||
+                                                from > rentDate.getTo()) {
+                                            isAvailable = true;
+                                        } else {
+                                            isAvailable = false;
+                                            break;
+                                        }
+                                    }
+                                    if (isAvailable) {
+                                        carList.add(car);
+                                    }
+                                } else {
+                                    carList.add(car);
+                                }
+                            }
                         }
                     }
                     emitter.onNext(carList);
@@ -290,10 +313,10 @@ public class FirebaseDataSource {
         });
     }
 
-    public Single<Boolean> confirmRentOrder(String orderId, String carId) {
+    public Single<Boolean> confirmRentOrder(RentOrder rentOrder) {
         return Single.create(emitter -> {
             //change order status
-            DatabaseReference orderRef = firebaseDatabase.getReference(Constants.ORDERS).child(orderId);
+            DatabaseReference orderRef = firebaseDatabase.getReference(Constants.ORDERS).child(rentOrder.getId());
             HashMap<String, Object> updates = new HashMap<>();
             updates.put("status", RentOrder.RentOrderStatus.CONFIRMED.value);
             orderRef.updateChildren(updates)
@@ -301,7 +324,14 @@ public class FirebaseDataSource {
                         if (task.isSuccessful()) {
                             //change car status in cars node
                             DatabaseReference carRef = firebaseDatabase.getReference(Constants.AVAILABLE_CARS)
-                                    .child(carId);
+                                    .child(rentOrder.getSelectedCar().getId());
+
+                            RentDate rentDate = new RentDate();
+                            rentDate.setFrom(rentOrder.getFrom());
+                            rentDate.setTo(rentOrder.getTo());
+                            rentDate.setDaysNum(rentOrder.getNumDays());
+                            carRef.child("rentDates").push().setValue(rentDate);
+
                             HashMap<String, Object> carUpdates = new HashMap<>();
                             carUpdates.put("status", Car.CarStatus.RENTED.value);
                             carRef.updateChildren(carUpdates).addOnCompleteListener(task1 -> {

@@ -158,7 +158,7 @@ public class OrderDetailsActivity extends DaggerAppCompatActivity {
     public void onAgreeClientClicked() {
         //change order status to confirmed
         //change car status to rented
-        manageOrdersViewModel.confirmRentOrder(order.getId(), order.getSelectedCar().getId());
+        manageOrdersViewModel.confirmRentOrder(order);
 //        manageOrdersViewModel.addStatusToRentOrder(order.getId(), agencyNotes, false);
     }
 

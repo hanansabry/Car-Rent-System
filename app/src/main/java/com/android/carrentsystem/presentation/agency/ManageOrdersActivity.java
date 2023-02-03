@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
 
 import android.content.Intent;
@@ -54,5 +55,10 @@ public class ManageOrdersActivity extends DaggerAppCompatActivity {
                 Toast.makeText(this, "No available Orders", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @OnClick(R.id.back_button)
+    public void onBackClicked() {
+        onBackPressed();
     }
 }

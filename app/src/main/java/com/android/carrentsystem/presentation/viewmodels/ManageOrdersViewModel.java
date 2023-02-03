@@ -81,8 +81,8 @@ public class ManageOrdersViewModel extends ViewModel {
                 });
     }
 
-    public void confirmRentOrder(String orderId, String carId) {
-        SingleObserver<Boolean> singleObserver = databaseRepository.confirmRentOrder(orderId, carId)
+    public void confirmRentOrder(RentOrder rentOrder) {
+        SingleObserver<Boolean> singleObserver = databaseRepository.confirmRentOrder(rentOrder)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new SingleObserver<Boolean>() {

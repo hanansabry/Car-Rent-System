@@ -80,7 +80,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
             phoneNumber.setText(String.format("Phone Number: %s", order.getPhone()));
             fromDate.setText(String.format("From: %s", formatDate(order.getFrom())));
             toDate.setText(String.format("To: %s", formatDate(order.getTo())));
-            totalDays.setText(String.format(Locale.getDefault(), "(%d)", order.getNumDays()));
+            totalDays.setText(String.format(Locale.getDefault(), "(%d days)", order.getNumDays()));
             status.setText(String.format("Status: %s", order.getStatus()));
             detailsButton.setOnClickListener(v -> onOrderClickedCallback.onOrderClicked(order));
         }

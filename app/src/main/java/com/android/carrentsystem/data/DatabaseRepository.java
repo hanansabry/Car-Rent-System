@@ -74,7 +74,7 @@ public class DatabaseRepository {
         return firebaseDataSource.addStatusToRentOrder(orderId, agencyNotes, isConfirmed);
     }
 
-    public Single<Boolean> confirmRentOrder(String orderId, String carId) {
-        return firebaseDataSource.confirmRentOrder(orderId, carId);
+    public Single<Boolean> confirmRentOrder(RentOrder rentOrder) {
+        return firebaseDataSource.confirmRentOrder(rentOrder);
     }
 }

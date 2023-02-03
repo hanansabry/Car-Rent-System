@@ -3,6 +3,7 @@ package com.android.carrentsystem.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ public class Car implements Parcelable {
     private double price;
     private List<String> carImagesUrls;
     private String status;
+    private HashMap<String, RentDate> rentDates;
 
     public Car() {
     }
@@ -40,6 +42,7 @@ public class Car implements Parcelable {
         price = in.readDouble();
         carImagesUrls = in.createStringArrayList();
         status = in.readString();
+        rentDates = (HashMap<String, RentDate>) in.readHashMap(RentDate.class.getClassLoader());
     }
 
     public static final Creator<Car> CREATOR = new Creator<Car>() {
@@ -158,6 +161,14 @@ public class Car implements Parcelable {
         this.status = status;
     }
 
+    public HashMap<String, RentDate> getRentDates() {
+        return rentDates;
+    }
+
+    public void setRentDates(HashMap<String, RentDate> rentDates) {
+        this.rentDates = rentDates;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -178,6 +189,7 @@ public class Car implements Parcelable {
         dest.writeDouble(price);
         dest.writeStringList(carImagesUrls);
         dest.writeString(status);
+        dest.writeMap(rentDates);
     }
 
     public enum CarStatus {
