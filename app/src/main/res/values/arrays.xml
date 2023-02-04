@@ -29,4 +29,5 @@
         <item>Brown</item>>
         <item>Orange</item>
     </string-array>
+    <string-array name="plat_num">Plate Number</string-array>
 </resources>

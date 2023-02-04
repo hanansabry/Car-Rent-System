@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.android.carrentsystem.R;
+import com.android.carrentsystem.presentation.admin.PoliceTrafficAuthorityActivity;
 import com.android.carrentsystem.presentation.agency.AgencyDashboardActivity;
 import com.android.carrentsystem.presentation.start.StartActivity;
+import com.android.carrentsystem.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.appcompat.app.AppCompatActivity;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class SplashActivity extends DaggerAppCompatActivity {
@@ -23,6 +24,8 @@ public class SplashActivity extends DaggerAppCompatActivity {
         setContentView(R.layout.activity_splash);
         new Handler().postDelayed(() -> {
             if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                startActivity(new Intent(SplashActivity.this, StartActivity.class));
+            } else if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(Constants.ADMIN_ID)) {
                 startActivity(new Intent(SplashActivity.this, StartActivity.class));
             } else {
                 startActivity(new Intent(SplashActivity.this, AgencyDashboardActivity.class));

@@ -7,6 +7,7 @@ import com.android.carrentsystem.data.models.Car;
 import com.android.carrentsystem.data.models.CarCategory;
 import com.android.carrentsystem.data.models.Color;
 import com.android.carrentsystem.data.models.RentOrder;
+import com.android.carrentsystem.data.models.Violation;
 import com.android.carrentsystem.datasource.FirebaseDataSource;
 
 import java.util.List;
@@ -81,5 +82,13 @@ public class DatabaseRepository {
 
     public Flowable<List<Car>> retrieveAgencyCars(String agencyId) {
         return firebaseDataSource.retrieveAgencyCars(agencyId);
+    }
+
+    public Flowable<List<Car>> retrieveAllCars() {
+        return firebaseDataSource.retrieveAllCars();
+    }
+
+    public Single<Boolean> addNewViolation(String carId, Violation violation) {
+        return firebaseDataSource.addNewViolation(carId, violation);
     }
 }

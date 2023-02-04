@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.android.carrentsystem.R;
 import com.android.carrentsystem.datasource.SharedPreferencesDataSource;
 import com.android.carrentsystem.di.ViewModelProviderFactory;
+import com.android.carrentsystem.presentation.admin.PoliceTrafficAuthorityActivity;
 import com.android.carrentsystem.presentation.agency.AgencyDashboardActivity;
 import com.android.carrentsystem.presentation.viewmodels.AuthenticationViewModel;
 
@@ -46,12 +47,17 @@ public class LoginActivity extends DaggerAppCompatActivity {
         authenticationViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(AuthenticationViewModel.class);
         authenticationViewModel.observeUserState().observe(this, agency -> {
             if (agency != null) {
-                signIn.setVisibility(View.VISIBLE);
-                loginProgressBar.setVisibility(View.GONE);
-                sharedPreferencesDataSource.setAgencyId(agency.getId());
-                sharedPreferencesDataSource.setAgencyName(agency.getName());
-                startActivity(new Intent(this, AgencyDashboardActivity.class));
-                finish();
+                if (agency.getRole() != null && agency.getRole().equals("admin")) {
+                    startActivity(new Intent(this, PoliceTrafficAuthorityActivity.class));
+                    finish();
+                } else {
+                    signIn.setVisibility(View.VISIBLE);
+                    loginProgressBar.setVisibility(View.GONE);
+                    sharedPreferencesDataSource.setAgencyId(agency.getId());
+                    sharedPreferencesDataSource.setAgencyName(agency.getName());
+                    startActivity(new Intent(this, AgencyDashboardActivity.class));
+                    finish();
+                }
             }
         });
         authenticationViewModel.observeErrorState().observe(this, error -> {

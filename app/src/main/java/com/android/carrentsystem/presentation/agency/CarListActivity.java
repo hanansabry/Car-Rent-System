@@ -55,7 +55,7 @@ public class CarListActivity extends DaggerAppCompatActivity {
                 });
                 carsRecyclerView.setAdapter(carsAdapter);
             } else {
-                Toast.makeText(this, "No available Orders", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No available cars", Toast.LENGTH_SHORT).show();
             }
         });
     }

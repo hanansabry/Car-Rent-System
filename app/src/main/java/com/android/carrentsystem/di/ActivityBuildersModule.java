@@ -5,9 +5,11 @@ import com.android.carrentsystem.di.modules.AddCarViewModelModule;
 import com.android.carrentsystem.di.modules.AgencyCarsViewModelModule;
 import com.android.carrentsystem.di.modules.AuthenticationViewModelModule;
 import com.android.carrentsystem.di.modules.ManagerOrdersViewModelModule;
+import com.android.carrentsystem.di.modules.PoliceTrafficeViewModelModule;
 import com.android.carrentsystem.di.modules.RentCarViewModelModule;
 import com.android.carrentsystem.di.modules.SearchCarViewModelModule;
 import com.android.carrentsystem.presentation.SplashActivity;
+import com.android.carrentsystem.presentation.admin.PoliceTrafficAuthorityActivity;
 import com.android.carrentsystem.presentation.agency.AddCarActivity;
 import com.android.carrentsystem.presentation.agency.CarListActivity;
 import com.android.carrentsystem.presentation.agency.ManageOrdersActivity;
@@ -53,4 +55,7 @@ public abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(modules = AgencyCarsViewModelModule.class)
     abstract CarListActivity contributeCarListActivity();
+
+    @ContributesAndroidInjector(modules = PoliceTrafficeViewModelModule.class)
+    abstract PoliceTrafficAuthorityActivity contributePoliceTrafficAuthorityActivity();
 }

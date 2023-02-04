@@ -8,6 +8,7 @@ import com.android.carrentsystem.data.models.CarCategory;
 import com.android.carrentsystem.data.models.Color;
 import com.android.carrentsystem.data.models.RentDate;
 import com.android.carrentsystem.data.models.RentOrder;
+import com.android.carrentsystem.data.models.Violation;
 import com.android.carrentsystem.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -393,5 +394,46 @@ public class FirebaseDataSource {
                 }
             });
         }, BackpressureStrategy.BUFFER);
+    }
+
+    public Flowable<List<Car>> retrieveAllCars() {
+        return Flowable.create(emitter -> {
+            Query ordersRef = firebaseDatabase.getReference(Constants.AVAILABLE_CARS);
+            ordersRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<Car> carList = new ArrayList<>();
+                    for (DataSnapshot carSnapshot : snapshot.getChildren()) {
+                        Car car = carSnapshot.getValue(Car.class);
+                        car.setId(carSnapshot.getKey());
+                        carList.add(car);
+                    }
+                    emitter.onNext(carList);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    emitter.onError(error.toException());
+                }
+            });
+        }, BackpressureStrategy.BUFFER);
+    }
+
+    public Single<Boolean> addNewViolation(String carId, Violation violation) {
+        return Single.create(emitter -> {
+            //add car firstly to available cars node
+            firebaseDatabase.getReference(Constants.AVAILABLE_CARS)
+                    .child(carId)
+                    .child("violationList")
+                    .push()
+                    .setValue(violation)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            emitter.onSuccess(true);
+                        } else {
+                            emitter.onSuccess(false);
+                        }
+                    });
+        });
     }
 }

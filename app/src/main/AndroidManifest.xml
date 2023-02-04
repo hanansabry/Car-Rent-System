@@ -14,8 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
-        <activity android:name=".presentation.agency.OrderDetailsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".presentation.admin.PoliceTrafficAuthorityActivity"/>
+        <activity
+            android:name=".presentation.agency.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.client.RentCarOrderActivity"
             android:screenOrientation="portrait" />
