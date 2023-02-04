@@ -24,6 +24,7 @@ public class Car implements Parcelable {
     private List<String> carImagesUrls;
     private String status;
     private HashMap<String, RentDate> rentDates;
+    private HashMap<String, Violation> violationList;
 
     public Car() {
     }
@@ -43,6 +44,7 @@ public class Car implements Parcelable {
         carImagesUrls = in.createStringArrayList();
         status = in.readString();
         rentDates = (HashMap<String, RentDate>) in.readHashMap(RentDate.class.getClassLoader());
+        violationList = (HashMap<String, Violation>) in.readHashMap(Violation.class.getClassLoader());
     }
 
     public static final Creator<Car> CREATOR = new Creator<Car>() {
@@ -169,6 +171,14 @@ public class Car implements Parcelable {
         this.rentDates = rentDates;
     }
 
+    public HashMap<String, Violation> getViolationList() {
+        return violationList;
+    }
+
+    public void setViolationList(HashMap<String, Violation> violationList) {
+        this.violationList = violationList;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -190,6 +200,7 @@ public class Car implements Parcelable {
         dest.writeStringList(carImagesUrls);
         dest.writeString(status);
         dest.writeMap(rentDates);
+        dest.writeMap(violationList);
     }
 
     public enum CarStatus {

@@ -22,4 +22,5 @@ public class Constants {
     public static final String ORDER = "order";
     public static final String IS_CLIENT = "is_client";
     public static final String NO_AVAILABLE_ORDERS = "no_orders_found";
+    public static final String VIOLATION_LIST = "violation_list";
 }
