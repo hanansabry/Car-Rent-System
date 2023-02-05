@@ -223,7 +223,7 @@
                     android:paddingEnd="16dp"
                     android:maxLines="4"
                     android:gravity="center"
-                    android:text="Agency Notes will be shown here"/>
+                    android:text="@string/agency_notes_will_be_shown_here"/>
 
             </RelativeLayout>
 

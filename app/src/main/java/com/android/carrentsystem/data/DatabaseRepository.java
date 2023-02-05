@@ -91,4 +91,8 @@ public class DatabaseRepository {
     public Single<Boolean> addNewViolation(String carId, Violation violation) {
         return firebaseDataSource.addNewViolation(carId, violation);
     }
+
+    public Single<Boolean> setViolationsDone(String carId) {
+        return firebaseDataSource.setViolationsDone(carId);
+    }
 }

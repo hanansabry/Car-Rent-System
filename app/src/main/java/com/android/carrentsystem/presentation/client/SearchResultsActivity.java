@@ -8,6 +8,8 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.carrentsystem.R;
@@ -23,6 +25,10 @@ public class SearchResultsActivity extends DaggerAppCompatActivity {
 
     @BindView(R.id.cars_available_recycler_view)
     RecyclerView carsRecyclerView;
+    @BindView(R.id.empty_view)
+    View emptyView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
     @Inject
     ViewModelProviderFactory providerFactory;
     @Inject
@@ -47,7 +53,9 @@ public class SearchResultsActivity extends DaggerAppCompatActivity {
         searchCarViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(SearchCarsViewModel.class);
         searchCarViewModel.retrieveSearchCarResults(category, type, model, year, from, to);
         searchCarViewModel.observeCarSearchResultLiveData().observe(this, carList -> {
+            progressBar.setVisibility(View.GONE);
             if (carList != null && !carList.isEmpty()) {
+                carsRecyclerView.setVisibility(View.VISIBLE);
                 AvailableCarsAdapter carsAdapter = new AvailableCarsAdapter(carList, car -> {
                     Intent intent1 = new Intent(SearchResultsActivity.this, RentCarOrderActivity.class);
                     intent1.putExtra(Constants.CAR, car);
@@ -58,7 +66,7 @@ public class SearchResultsActivity extends DaggerAppCompatActivity {
                 });
                 carsRecyclerView.setAdapter(carsAdapter);
             } else {
-                Toast.makeText(this, "No available Cars", Toast.LENGTH_SHORT).show();
+                emptyView.setVisibility(View.VISIBLE);
             }
         });
     }

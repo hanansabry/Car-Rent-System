@@ -65,5 +65,6 @@
     <string name="violation_list">Violation List</string>
     <string name="police_traffic_authority">Police Traffic Authority</string>
     <string name="fees">Fees</string>
+    <string name="agency_notes_will_be_shown_here">Agency Notes will be shown here</string>
 
 </resources>

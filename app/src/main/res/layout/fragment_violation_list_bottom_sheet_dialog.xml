@@ -35,11 +35,25 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/violation_list_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:clipToPadding="false"
+        android:layout_marginBottom="16dp"
         android:padding="16dp"
+        app:layout_constraintHeight_default="wrap"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@id/done_button"
         tools:listitem="@layout/violation_item_layout" />
+
+    <Button
+        android:id="@+id/done_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Done"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:background="@drawable/cornered_primary_bg"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,8 @@ import com.android.carrentsystem.data.models.RentDate;
 import com.android.carrentsystem.data.models.RentOrder;
 import com.android.carrentsystem.data.models.Violation;
 import com.android.carrentsystem.utils.Constants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -432,6 +434,46 @@ public class FirebaseDataSource {
                             emitter.onSuccess(true);
                         } else {
                             emitter.onSuccess(false);
+                        }
+                    });
+        });
+    }
+
+    public Single<Boolean> setViolationsDone(String carId) {
+        return Single.create(emitter -> {
+            //set car available again
+            HashMap<String, Object> updates = new HashMap<>();
+            updates.put("status", Car.CarStatus.AVAILABLE.value);
+            updates.put("violationList", null);
+            firebaseDatabase.getReference(Constants.AVAILABLE_CARS)
+                    .child(carId)
+                    .updateChildren(updates)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            //get orders for this car
+                            //set order of this car is returned
+                            if (task.isSuccessful()) {
+                                firebaseDatabase.getReference(Constants.ORDERS)
+                                        .addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
+                                                    RentOrder order = orderSnapshot.getValue(RentOrder.class);
+                                                    if (order.getSelectedCar().getId().equals(carId)) {
+                                                        orderSnapshot.getRef().child("status").setValue(RentOrder.RentOrderStatus.RETURNED.value);
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                emitter.onError(error.toException());
+                                            }
+                                        });
+                            } else {
+                                emitter.onError(task.getException());
+                            }
                         }
                     });
         });

@@ -24,6 +24,9 @@ import com.android.carrentsystem.utils.Constants;
 import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 public class OrderDetailsActivity extends DaggerAppCompatActivity {
@@ -66,6 +69,14 @@ public class OrderDetailsActivity extends DaggerAppCompatActivity {
     Button confirmAgencyButton;
     @BindView(R.id.reject_button)
     Button rejectAgencyButton;
+    @BindView(R.id.from_date_edit_text)
+    EditText fromDateEditText;
+    @BindView(R.id.to_date_edit_text)
+    EditText toDateEditText;
+    @BindView(R.id.status_edit_text)
+    EditText statusEditText;
+    @BindView(R.id.agency_notes_layout)
+    View agencyNotesView;
     @Inject
     ViewModelProviderFactory providerFactory;
     @Inject
@@ -93,6 +104,14 @@ public class OrderDetailsActivity extends DaggerAppCompatActivity {
             agencyNotesEditText.setText(order.getAgencyNotes());
             if (order.getStatus().equals(RentOrder.RentOrderStatus.PROCESSING.value)) {
                 agreeClientButton.setVisibility(View.VISIBLE);
+            } else if (order.getStatus().equals(RentOrder.RentOrderStatus.NEW.value)) {
+                agencyNotesEditText.setHint(R.string.agency_notes_will_be_shown_here);
+            }
+        } else {
+            if (!order.getStatus().equals(RentOrder.RentOrderStatus.NEW.value)) {
+                agencyNotesView.setVisibility(View.GONE);
+                confirmAgencyButton.setVisibility(View.GONE);
+                rejectAgencyButton.setVisibility(View.GONE);
             }
         }
         manageOrdersViewModel = new ViewModelProvider(getViewModelStore(), providerFactory).get(ManageOrdersViewModel.class);
@@ -106,9 +125,12 @@ public class OrderDetailsActivity extends DaggerAppCompatActivity {
     }
 
     private void setClientDetails() {
+        statusEditText.setText("Order Status: " + order.getStatus());
         fullNameEditText.setText(order.getFullName());
         civilIdEditText.setText(order.getCivilId());
         phoneEditText.setText(order.getPhone());
+        fromDateEditText.setText(formatDate(order.getFrom()));
+        toDateEditText.setText(formatDate(order.getTo()));
 
         if (order.getLicenseImages().size() > 0) {
             Glide.with(this)
@@ -160,6 +182,11 @@ public class OrderDetailsActivity extends DaggerAppCompatActivity {
         //change car status to rented
         manageOrdersViewModel.confirmRentOrder(order);
 //        manageOrdersViewModel.addStatusToRentOrder(order.getId(), agencyNotes, false);
+    }
+
+    private String formatDate(long milliseconds) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        return simpleDateFormat.format(milliseconds);
     }
 
 

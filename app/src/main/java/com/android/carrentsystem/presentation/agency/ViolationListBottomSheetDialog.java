@@ -16,9 +16,11 @@ import android.view.ViewGroup;
 
 import com.android.carrentsystem.R;
 import com.android.carrentsystem.data.models.Violation;
+import com.android.carrentsystem.di.DaggerBottomSheetDialogFragment;
 import com.android.carrentsystem.presentation.adapters.ViolationsAdapter;
 import com.android.carrentsystem.utils.Constants;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class ViolationListBottomSheetDialog extends BottomSheetDialogFragment {
 
     public static final String TAG = "ViolationListBottomSheetDialog";
     private ArrayList<Violation> violationList;
+    private CarViolationsCallback carViolationsCallback;
     @BindView(R.id.violation_list_recycler_view)
     RecyclerView violationsRecyclerView;
 
@@ -50,6 +53,9 @@ public class ViolationListBottomSheetDialog extends BottomSheetDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getContext() instanceof CarViolationsCallback) {
+            carViolationsCallback = (CarViolationsCallback) getContext();
+        }
         if (getArguments() != null) {
             violationList = getArguments().getParcelableArrayList(Constants.VIOLATION_LIST);
         }
@@ -71,8 +77,17 @@ public class ViolationListBottomSheetDialog extends BottomSheetDialogFragment {
         violationsRecyclerView.setAdapter(violationsAdapter);
     }
 
+    @OnClick(R.id.done_button)
+    public void onDoneClicked() {
+        carViolationsCallback.onViolationsDone();
+    }
+
     @OnClick(R.id.back_button)
     public void onBackClicked() {
         dismiss();
+    }
+
+    public interface CarViolationsCallback {
+        void onViolationsDone();
     }
 }
